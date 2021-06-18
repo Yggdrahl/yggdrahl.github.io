@@ -9,15 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="69.694527mm"
-   height="69.694527mm"
-   viewBox="0 0 69.694527 69.694527"
+   width="41.14954mm"
+   height="26.324839mm"
+   viewBox="0 0 41.14954 26.324838"
    version="1.1"
-   id="svg2810"
+   id="svg2407"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="favicon.svg">
+   sodipodi:docname="yggHeaderSmall.svg">
   <defs
-     id="defs2804" />
+     id="defs2401" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="-28.871189"
-     inkscape:cy="223.02101"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="294.3114"
+     inkscape:cy="12.948904"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -41,14 +41,14 @@
      inkscape:window-y="1072"
      inkscape:window-maximized="1" />
   <metadata
-     id="metadata2807">
+     id="metadata2404">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,16 +56,11 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-24.154823,-70.761572)">
+     transform="translate(21.023765,-99.053415)">
     <path
-       style="fill:#4d4d4d;stroke:#4d4d4d;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 26.242321,86.802237 v 25.653743 l 8.788611,8.78861 h 48.361394 v 8.12817 h 9.95702 V 86.802237 h -9.95702 V 111.03385 H 36.199342 V 86.802237 Z"
-       id="path2606-2-6-1-2"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#ffcc00;stroke:#ffcc00;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 24.654823,85.214744 v 25.653726 l 8.78861,8.78861 h 48.361392 v 8.12817 h 9.957019 V 85.214744 H 81.804825 V 109.44634 H 34.611843 V 85.214744 Z"
-       id="path2606-2-6-1"
+       style="fill:#ffcc00;fill-opacity:1;stroke:#ffcc00;stroke-width:0.6041894;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -20.72167,99.35551 v 15.49971 l 5.30999,5.30999 h 29.21943 v 4.91095 h 6.01593 V 99.35551 h -6.01593 v 14.64047 H -14.70574 V 99.35551 Z"
+       id="path2606-2-6-1-0-5"
        inkscape:connector-curvature="0" />
   </g>
 </svg>
