@@ -77,7 +77,7 @@ function start(){
     },
     followZRot: true,
     canvasId: 'jeeFaceFilterCanvas',
-    NNCPath: '../../../neuralNets/', //root of NN_DEFAULT.json file
+    NNCPath: './', //root of NN_DEFAULT.json file
     callbackReady: function(errCode, spec){
       if (errCode){
         console.log('AN ERROR HAPPENS. SORRY BRO :( . ERR =', errCode);
