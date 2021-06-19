@@ -35,7 +35,7 @@
     <section>
       <div class="header">
           <a href="/" class="headerLink">
-              <img src="../assets/yggHeader.svg" alt="header">
+              <img src="../../assets/yggHeader.svg" alt="header">
           </a>
 
           <div class="topnav">
@@ -43,13 +43,39 @@
               <a href="#">Person</a>
               <a href="#">Projekte</a>
               <a href="/whs" class="active">WHS</a>
-              <a href="javascript:toggleTopnav()" class="toggleMenuButton"><img src="../assets/NavbarButton.svg"></a>
+              <a href="javascript:toggleTopnav()" class="toggleMenuButton"><img src="../../assets/NavbarButton.svg"></a>
           </div>
 
       </div>
   </section>
     <canvas width="600" height="600" id='jeeFaceFilterCanvas'></canvas>
   </body>
+  <script>
+
+    resize();
+    document.querySelector('.header').querySelector('img').style.visibility = "visible";
+
+    function resize() {
+        if (window.innerWidth <= 750) {
+            document.querySelector('.header').querySelector('img').setAttribute('src', "../../assets/yggHeaderSmall.svg");
+        } else {
+            document.querySelector('.header').querySelector('img').setAttribute('src', "../../assets/yggHeader.svg");
+        }
+    }
+
+    window.onresize = resize;
+
+    function toggleTopnav() {
+        let x = document.querySelector('.topnav');
+        if(x.className === 'topnav') {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+    
+    
+</script>
 </html>
  
  
