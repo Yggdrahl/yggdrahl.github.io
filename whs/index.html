@@ -7,8 +7,8 @@
     <Title>
         Yggdrahl | Dennis Krämer
     </Title>
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="../assets/favicon.svg" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200&family=Orbitron&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
     <section>
         <div class="header">
             <a href="/" class="headerLink">
-                <img src="assets/yggHeader.svg" alt="header">
+                <img src="../assets/yggHeader.svg" alt="header">
             </a>
 
             <div class="topnav">
@@ -26,7 +26,7 @@
                 <a href="#">Person</a>
                 <a href="#">Projekte</a>
                 <a href="/whs" class="active">WHS</a>
-                <a href="javascript:toggleTopnav()" class="toggleMenuButton"><img src="assets/NavbarButton.svg"></a>
+                <a href="javascript:toggleTopnav()" class="toggleMenuButton"><img src="../assets/NavbarButton.svg"></a>
             </div>
 
         </div>
@@ -44,11 +44,11 @@
             <a href="#">
                 <li>
                     <div>
-                    <img src="assets/thumb_jeeliz.svg">
+                    <img src="../assets/thumb_jeeliz.svg">
             
                     <div>
                         <b>Facetracking Test</b><br>
-                        Eine Jeeliz Gltf-Demo-Anwendung.<br>
+                        Eine Jeeliz Gltf-Demo-Anwendung von GitHub.<br>
                     </div>
                     </div>
                 </li>
@@ -72,9 +72,9 @@
 
     function resize() {
         if (window.innerWidth <= 750) {
-            document.querySelector('.header').querySelector('img').setAttribute('src', "assets/yggHeaderSmall.svg");
+            document.querySelector('.header').querySelector('img').setAttribute('src', "../assets/yggHeaderSmall.svg");
         } else {
-            document.querySelector('.header').querySelector('img').setAttribute('src', "assets/yggHeader.svg");
+            document.querySelector('.header').querySelector('img').setAttribute('src', "../assets/yggHeader.svg");
         }
     }
 
