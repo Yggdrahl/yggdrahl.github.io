@@ -1,5 +1,5 @@
 html, body {
-    background-color: #4d4d4d;
+    background-color: #d9d9d9;
     font-family: 'Mitr', sans-serif;
     /*font-family: 'Orbitron', sans-serif;*/
     margin: 0px;
@@ -20,23 +20,35 @@ html, body {
     /*background-image: radial-gradient(#808080 1px, transparent 0);*/
     /*background-size: 8px 8px;*/
     border-bottom-style: solid;
-    border-bottom-width: 3px;
+    border-bottom-width: 4px;
     border-bottom-color: #ffcc00;
+    box-shadow: 0px 3px 15px grey;
     
 }
 
+.logoWrapper {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 400px;
+    display: inline-block;
+}
+
 .header .headerLink img {
-    position: relative;    
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;    
     height: 32px;
     visibility: hidden;
 }
 
 .header .headerLink {
-    position: relative;
-    transform: translateY(-50%);
-    top: 50%;
-    left: 20px;
-    height: 32px;
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    width: 100%;
 }
 
 .header a, .header .topnav {
@@ -49,9 +61,10 @@ html, body {
     margin: 0;
     padding: 0;
     top: 0;
-    left: 40px;
+    left: 0px;
     height: 100%;
-    /*float: right;*/
+    width: max-content;
+    
 }
 
 .header .topnav a {
@@ -81,7 +94,7 @@ html, body {
 
 .header .topnav a:hover {
     text-decoration: none;
-    color: black;
+    color: white;
     background-color: #a79139;
 }
 
@@ -108,9 +121,19 @@ html, body {
     top: 0;
 }
 
+.header .topnav h1 {
+    position: absolute;
+    left: 8px;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
 @media screen and (max-width: 470px) {
 
-    .header .topnav {
+    /*.header .topnav {
         width: calc(100% - 97px);
     }
 
@@ -149,36 +172,47 @@ html, body {
         top: 0;
         left: auto;
         right: 0;
-    }
+    }*/
 
   }
 
-  .header .topnav.responsive a {
-      display: block;
+  .subheader {
+      background-color: #ffcc00;
+      height: 32px;
+      width: 100%;
+      display: none;
+  }
+
+  .subheader a:first-child {
+      margin-left: 6px;
+  }
+
+  .subheader a {
+      color: black;
   }
 
   /*=======================*/
 
   .mainScene {
-      background-color: #414141;
-      color: white;
+      background-color: white;
+      color: black;
       max-width: 1200px;
       width: 100%;
       position: relative;
       padding: 0px;
-      min-height: calc(100% - 63px);
-      height: fit-content;
-      /*
-      transform: translateX(50%);
+      min-height: calc(100% - 64px);
+      /*height: max-content;*/
+      
+      transform: translateX(-50%);
       left: 50%;
-      */
-      margin-left: auto;
-      margin-right: auto;
+      
+      
   }
 
   .mainScene a {
     text-decoration: underline;
     color: #ffcc00;
+    
   }
   
   .mainScene > div {
@@ -194,7 +228,7 @@ html, body {
       margin: 0;
   }
 
-  .thumbnails li img{
+  .thumbnails li .thumbnail{
     position: relative;
     transform: translateX(-50%);
     left: 50%;
@@ -216,7 +250,6 @@ html, body {
       overflow: hidden;
       text-overflow: ellipsis;
         content: "";
-        position:relative;
       
 }
 
@@ -241,7 +274,7 @@ html, body {
 
   .thumbnails a {
       text-decoration: none;
-      color: white;
+      color: black;
       position: relative;
       width: 100%;
       height: 100%;
@@ -256,9 +289,16 @@ html, body {
   }
 
   .thumbnails li > div:hover {
-    opacity: 0.6;
+    opacity: 0.75;
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
+  }
+
+  .thumbnails li .folderIcon {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      z-index: 1000;
   }
 
 
@@ -279,9 +319,36 @@ html, body {
 
     .thumbnails li {
         
-        width: calc(100% - 33px);
+        width: calc(100% - 40px);
         
     }
+
+  }
+
+  .footer {
+      width: 100%;
+      max-width: 1200px;
+      transform: translateX(-50%);
+      left: 50%;
+      position: relative;
+  }
+
+  .footer > div {
+      height: 92px;
+      
+    background-color: #c8c8c8;
+    z-index: 1000;
+    color: black;
+    border-top-style: solid;
+    border-top-width: 4px;
+    border-top-color: #ffcc00;
+    /*box-shadow: 0px 3px 15px grey;*/
+
+      
+      width: calc(100% - 32px);
+      position: relative;
+      padding: 8px 16px 0px 16px;      
+      
 
   }
 

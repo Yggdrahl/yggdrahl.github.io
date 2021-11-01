@@ -12,96 +12,54 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200&family=Orbitron&display=swap" rel="stylesheet">
+    <script src="app.js"></script>
 </head>
 
 <body>
-    <section>
+    <section class="headSection">
         <div class="header">
-            <a href="/" class="headerLink">
-                <img src="./assets/yggHeader.svg" alt="header">
-            </a>
-
-            <div class="topnav">
-                <a href="/" class="active">Index</a>
-                <a href="#">Person</a>
-                <a href="#">Projekte</a>
-                <a href="/whs">WHS</a>
-                <a href="javascript:toggleTopnav()" class="toggleMenuButton"><img src="assets/NavbarButton.svg"></a>
+            <div class="logoWrapper">
+                <a href="/" class="headerLink">
+                    <img src="./assets/yggHeader.svg" alt="header">
+                </a>
             </div>
-
+            <div class="topnav">
+                <div class="navbarButtons">
+                    <a href="/" class="active">Index</a>
+                    <a href="/projects">Projekte</a>
+                    <a href="/about">Über mich</a>
+                </div>
+                
+            </div>
+        </div>
+        <div class="subheader">
+            
         </div>
     </section>
+    
     <section class="mainScene">
 
 
         <div>
             <h1>Über diese Seite...</h1>
             Hier hoste ich einige meiner statischen Projekte und Webanwendungen für mein Studium.
+            <br>
+            <img src="https://drive.google.com/uc?export=view&id=1gZyYAEbte4gwpT4tDxBL3ZyiK09Zl5gf" width="200px" height="200px">
         </div>
 
+        
 
-         </section>
-    
-    <!--<svg
-        width="125px"
-        height="108px"
-        viewBox="0 0 34.11924 29.578728">
-            <g transform="translate(-81.197672,-94.052222)">
-                <path
-                style="fill:#ffcc00;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-                d="m 89.979864,94.552222 h 16.470486 l 8.28921,14.357338 -8.21074,14.22139 H 90.013265 l -8.238731,-14.2699 z"/>
-            </g>
-    </svg>-->
+        
+
+    </section>
+    <section class="footer">
+        <div>
+           Impressum<br>
+           © 2021 Dennis Krämer <a href="https://github.com/Yggdrahl">https://github.com/Yggdrahl</a><br>
+           Diese Webseite wird über Github Pages gehostet
+        </div>
+        
+    </section>
+
 </body>
-<script>
-    const svgNS = "http://www.w3.org/2000/svg";
-    /*
-    let svgTmp = document.createElementNS(svgNS, 'svg');
-    svgTmp.setAttribute('width', "125px");
-    svgTmp.setAttribute('height', "108px");
-    svgTmp.style.width = "125px";
-    svgTmp.style.height = "108px";
-    svgTmp.setAttribute('viewBox', "0 0 34.11924 29.578728");
-    
-    let gTmp = document.createElementNS(svgNS, 'g');
-    gTmp.setAttribute('transform', "translate(-81.197672,-94.052222)");
-    svgTmp.appendChild(gTmp);
-    let pathTmp = document.createElementNS(svgNS, 'path');
-    pathTmp.setAttribute('style', "fill:#ffcc00;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1");
-    pathTmp.setAttribute('d', "m 89.979864,94.552222 h 16.470486 l 8.28921,14.357338 -8.21074,14.22139 H 90.013265 l -8.238731,-14.2699 z");
-    gTmp.appendChild(pathTmp);
-    */
-
-    //document.querySelector('.header').appendChild(svgTmp);
-
-    
-    
-</script>
-
-<script>
-
-    resize();
-    document.querySelector('.header').querySelector('img').style.visibility = "visible";
-
-    function resize() {
-        if (window.innerWidth <= 750) {
-            document.querySelector('.header').querySelector('img').setAttribute('src', "./assets/yggHeaderSmall.svg");
-        } else {
-            document.querySelector('.header').querySelector('img').setAttribute('src', "./assets/yggHeader.svg");
-        }
-    }
-
-    window.onresize = resize;
-
-    function toggleTopnav() {
-        let x = document.querySelector('.topnav');
-        if(x.className === 'topnav') {
-            x.className += " responsive";
-        } else {
-            x.className = "topnav";
-        }
-    }
-    
-    
-</script>
 </html>
