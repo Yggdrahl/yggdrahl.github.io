@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function resize() {
     
     if (window.innerWidth < 360) {
-        document.querySelector('.header').querySelector('img').setAttribute('src', "./assets/yggHeaderSmall.svg");
+        document.querySelector('.header').querySelector('img').setAttribute('src', "/assets/yggHeaderSmall.svg");
         logoWrapper.style.width = "70px";
         
         subheaderWrapper.appendChild(navbarButtons);
