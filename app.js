@@ -54,7 +54,7 @@ function resize() {
         subheaderWrapper.style.display = "block";
 
     } else if(window.innerWidth <= 690) {
-        document.querySelector('.header').querySelector('img').setAttribute('src', "./assets/yggHeaderSmall.svg");
+        document.querySelector('.header').querySelector('img').setAttribute('src', "/assets/yggHeaderSmall.svg");
         logoWrapper.style.width = "70px";
         
         topnavWrapper.innerHTML = "";
@@ -63,7 +63,7 @@ function resize() {
 
         subheaderWrapper.style.display = "none";
     } else {
-        document.querySelector('.header').querySelector('img').setAttribute('src', "./assets/yggHeader.svg");
+        document.querySelector('.header').querySelector('img').setAttribute('src', "/assets/yggHeader.svg");
         logoWrapper.style.width = null;
         
         topnavWrapper.innerHTML = "";
