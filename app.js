@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
 
-    window.onresize = resize;
+    window.onresize = window.onorientationchange = ScreenOrientation.onchange = resize;
 
     
 });
@@ -81,7 +81,3 @@ function resize() {
         resize();
     }
 }
-
-
-
-//https://drive.google.com/uc?export=view&id=1sQG3mLYuCuH-6GJWFyt9bLSwpDDc1g0S
