@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <meta http-equiv="content-language" content="de-DE" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <Title>
+                Demo
+            </Title>
+            <link rel="stylesheet" href="./css/demostyle.css" type="text/css" />
+            <link rel="shortcut icon" href="../assets/favicon.svg" type="image/x-icon">
+
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200&family=Orbitron&display=swap" rel="stylesheet">
+            <style>
+                video{
+                    background-color: black;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 800;
+                }
+
+                .errorScreen {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 999;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgb(235, 235, 235);
+                    display: none;
+                    text-align: center;
+                }
+
+                .errorScreen p {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                .toolbar {
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0px;
+                    width: 100%;
+                    height: 40px;
+                    background-color: rgba(150,150,150,.5);
+                    z-index: 900;
+                }
+
+                .toolbar > * {
+                    position: relative;
+                    display: inline-block;
+                    height: 38px;
+                    transform: translateY(-50%);
+                    top: 50%;
+                }
+
+            </style>
+    </head>
+
+
+<body>
+    <div class="mainScene">
+        <div class="infoBG"></div>
+        <div class="infoButton">
+            <img src="./assets/info.svg">
+        </div>
+        <div class="infoBox">
+            <div class="infoClose">
+                <img src="./assets/closeDark.svg">
+            </div>
+            <div class="infoScrollBox">
+                2022 Dennis Krämer<br><br>
+                Diese Demo zeigt den Zugriff auf alle verfügbaren Systemkameras.
+                Bei einem Smartphone kann, wenn verfügbar, zwischen Front- und Rückkamera gewechselt werden.
+                Bei einem Computer werden alle angeschlossenen WebCams genutzt.
+                <br><br>
+                Der Code aus dieser Demo ist <a href="https://github.com/Yggdrahl/AbschlussarbeitWebAR/tree/main/demos/kameraSimpel.html">hier</a> zu finden.
+                <br><br>
+                <b>Bekannte Probleme:</b><br>
+                Der Browser benötigt eine Zustimmung, zum Verwenden der Kamera. Überprüfen Sie ggf. ihre Einstellungen.
+                <br><br>
+                Die Browser API wählt immer die erste Kamera aus der Liste, auch wenn andere Kameras bei der Anfrage des MedienStreams angegeben werden.
+                Die Constraints werdenm je nach Betriebsystem und Browser, ignoriert oder anders interpretiert.
+                <br><br>
+                Der MedienStream kann nicht erneut aktualisiert werden, wenn sich die Orientierung des Smartphones geändert hat. Die Seite muss zuerst neu geladen werden.
+                
+            </div>
+        </div>
+        <div class="errorScreen"></div>
+        <video autoplay></video>
+        <div class="toolbar">
+            <select id="auswahl">
+                <option value="">Keine Kamera gefunden</option>
+            </select>
+            <button>Start</button>
+        </div>
+        
+    </div>
+
+</body>
+
+<script src="./js/infoBox.js" type="module"></script>
+<script type="module">
+    let cams = new Array();
+    let errorScreen = document.querySelector('.errorScreen');
+    let videoElement = document.querySelector('video');
+    let streamSettings;
+    //let selectedCam = 0;
+    let auswahl = document.getElementById('auswahl');
+    let startButton = document.querySelector('.toolbar').querySelector('button');
+    startButton.onclick = requestMediaStream;
+    
+
+
+if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+    checkForCams();
+        
+} else {
+    showErrorScreen(new Error("noMediaDevices"));
+}
+
+
+async function checkForCams() {
+    let inputs = await navigator.mediaDevices.enumerateDevices();
+        for(let i = 0; i < inputs.length; i++) {
+            if(inputs[i].kind == 'videoinput') {
+                cams.push(inputs[i]);
+            }
+        }
+            
+        if(cams.length <= 0) {
+            showErrorScreen(new Error("noVideoInput"));
+        } else {
+            generateUI();
+        }
+}
+
+function showErrorScreen(error) {
+    
+    if(error) {
+        errorScreen.style.display = "block";
+        let errorPrompt = document.createElement('p');
+        errorPrompt.innerHTML = "Es kann auf keine Kamera zugegriffen werden. Überprüfen Sie die Freigabe.";
+        errorScreen.appendChild(errorPrompt);
+    } else {
+        errorScreen.style.display = "none";
+
+    }
+        
+}
+
+function generateUI() {
+    let selectElement;
+    for(let i = 0; i < cams.length; i++) {
+        if(i == 0) {
+            auswahl.querySelector('option').remove();
+        }
+        selectElement = document.createElement('option');
+        selectElement.setAttribute('value', cams[i].deviceId);
+        selectElement.innerHTML = cams[i].label;
+        auswahl.appendChild(selectElement);
+    }
+}
+
+function requestMediaStream() {
+    if(cams.length >= 1) {
+
+        if(screen.orientation.type.indexOf('portrait') >= 0) {
+            streamSettings = {
+                video: {
+                    width: Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0),
+                    height: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+                },
+                deviceId: {
+                    //exact: cams[selectedCam].deviceId
+                    exact: auswahl.value
+                }
+            }; 
+        } else {
+            streamSettings = {
+                video: {
+                    width: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
+                    height: Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+                },
+                deviceId: {
+                    //exact: cams[selectedCam].deviceId
+                    exact: auswahl.value
+                }
+            }; 
+        }
+        
+
+        navigator.mediaDevices.getUserMedia(streamSettings)
+        .then((str) => {videoElement.srcObject = str; videoElement.play(); startButton.innerHTML = "refresh"})
+        .catch((error) => showErrorScreen(error));
+    }
+}
+</script>
+</html>
