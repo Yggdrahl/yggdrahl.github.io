@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <meta http-equiv="content-language" content="de-DE" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <Title>
+                Demo: WebXR Session (SLAM)
+            </Title>
+            <link rel="stylesheet" href="./css/demostyle.css" type="text/css" />
+            <link rel="shortcut icon" href="../assets/favicon.svg" type="image/x-icon">
+
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200&family=Orbitron&display=swap" rel="stylesheet">
+            <style>
+                .mainScene #startButton {
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    top: 50%; left: 50%;
+                    padding: 15px 25px;
+                    font-size: 24px;
+                    cursor: pointer;
+                    text-align: center;
+                    text-decoration: none;
+                    outline: none;
+                    color: black;
+                    background-color: #ffcc00;
+                    border: none;
+                    border-radius: 15px;
+                    box-shadow: 0 9px #999;
+                    -webkit-tap-highlight-color: transparent;
+                }
+                .mainScene #startButton:active {
+                    background-color: #ffe374;
+                    box-shadow: 0 5px #666;
+                    transform: translate(-50%,calc(-50% + 4px));
+                }
+                .mainScene #startButton:disabled {
+                    background-color: #ffcc008a;
+                    color: #0000006b;
+                    box-shadow: 0 9px rgba(102, 102, 102, 0.466);
+                }
+                .mainScene #endButton {
+                    position: absolute;
+                    display: none;
+                    padding: 0;
+                    margin: 0;
+                    top: 12px;
+                    right: 12px;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: rgb(200,200,200);
+                    text-align: center;
+                    background-color: rgb(250,250,250);
+                    font-size: 12px;
+                    text-decoration: none;
+                }
+
+                .mainScene #endButton > img {
+                    position: absolute;
+                    width: 60%;
+                    height: 60%;
+                    transform: translate(-50%,-50%);
+                    top: 50%;
+                    left: 50%;
+                }
+            </style>
+    </head>
+
+
+<body>
+    <div class="mainScene">
+        <div class="infoBG"></div>
+        <div class="infoButton">
+            <img src="./assets/info.svg">
+        </div>
+        <div class="infoBox">
+            <div class="infoClose">
+                <img src="./assets/closeDark.svg">
+            </div>
+            <div class="infoScrollBox">
+                Eine einfache WebXR Demo mit SLAM Tracking, ohne HitTetsts. Ein 3D Objekt sollte direkt vor der Kamera das Betrachters erscheinen und im Raum schweben. Wird die Kamera bewegt, bleibt das Objekt enstprechend an der selben sSTelle im Raum stehen.
+                <br><br>
+                Die Anwendungn kann nur auf WebXR fähigen Geräten getsetet werden. Kann der Button nicht ausgewählt werden, unterstützt ihr Gerät kein WebXR mit "immersive-ar"-Sessions.
+                <br><br>
+                2022 Dennis Krämer
+            </div>
+
+        </div>
+
+        <button id="startButton" disabled>Starte XR Session</button>
+        <button id="endButton" disabled><img src="./assets/closeDark.svg"></button>
+
+
+    </div>
+
+</body>
+
+<script src="./bibs/three.min.js"></script>
+<script type="module">
+    
+    let session;
+    let startButton = document.getElementById('startButton');
+    let endButton = document.getElementById('endButton');
+    let xrSupport = false;
+    
+    startButton.onclick = activateXR;
+    endButton.onclick = endXR;
+
+    checkXrSupport();
+
+    async function checkXrSupport() {
+        xrSupport = (navigator.xr && await navigator.xr.isSessionSupported("immersive-ar"));
+        startButton.disabled = !xrSupport;
+    }
+
+    async function activateXR() {
+        
+        initializeUI();
+
+        // Das Canvas wird zum Rendern der WebGL Inhalte verwendet.
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('id', "drawCanvas");
+        const gl = canvas.getContext("webgl", { xrCompatible: true });
+        //============================================================================
+        // THREEjs Initialisierung
+        //============================================================================
+        const scene = new THREE.Scene();
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.3);
+        directionalLight.position.set(10, 15, 10);
+        scene.add(ambientLight);
+        scene.add(directionalLight);
+        const icosahedron = generate3dObject();
+        scene.add(icosahedron);
+        
+        //Renderer
+        const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            preserveDrawingBuffer: true,
+            canvas: canvas,
+            context: gl
+        });
+        renderer.autoClear = false;
+        const camera = new THREE.PerspectiveCamera();
+        camera.matrixAutoUpdate = false;//WebXR updated die Matrizen selber. ThreeJS muss das nicht mehr übernehmen
+        //============================================================================
+        // WebXR Session Initialisierung
+        //============================================================================
+        session = await navigator.xr.requestSession("immersive-ar",{
+            requiredFeatures: ['dom-overlay'],
+            optionalFeatures: ['dom-overlay'], //wird für das Browser-Plugin benötigt
+            domOverlay: {
+                root: document.querySelector(".mainScene")
+            }
+        });
+        session.updateRenderState({
+            baseLayer: new XRWebGLLayer(session, gl)
+        });
+        
+        const referenceSpace = await session.requestReferenceSpace('local');//Mapping (Basic, ohne HitTests)  
+        session.requestAnimationFrame(onXRFrame);//RenderLoop (Deltafunktion)
+        //--
+        session.addEventListener('end', function () {
+            startButton.style.display = 'block';
+            startButton.disabled = !xrSupport;
+            endButton.style.display = 'none';
+            endButton.disabled = true;
+        });
+
+        //============================================================================
+
+        function onXRFrame(time, frame) {
+            // Der nächste Render Request wird gestartet
+            session.requestAnimationFrame(onXRFrame);
+
+            gl.bindFramebuffer(gl.FRAMEBUFFER, session.renderState.baseLayer.framebuffer);
+
+            // Ermittlng der Kamera Position mit SLAM Tracking
+            const pose = frame.getViewerPose(referenceSpace);
+            if (pose) {
+                const view = pose.views[0]; //AR Session geben immer ein Array der Länge 1 zurück
+
+                const viewport = session.renderState.baseLayer.getViewport(view);
+                renderer.setSize(viewport.width, viewport.height)
+                //Positionieren der virtuellen Kamera, entlang der Geräte-Kamera
+                camera.matrix.fromArray(view.transform.matrix)
+                camera.projectionMatrix.fromArray(view.projectionMatrix);
+                camera.updateMatrixWorld(true);
+                //Rotieren des Onjektes
+                let speed = 0.008;
+                icosahedron.rotation.x -= speed * 2;
+                icosahedron.rotation.y -= speed;
+                icosahedron.rotation.z -= speed * 3;
+
+                renderer.render(scene, camera);// Render Befehl
+            }
+        }
+
+}
+
+function initializeUI() {
+    startButton.style.display = 'none';
+    startButton.disabled = true;
+    endButton.style.display = 'block';
+    endButton.disabled = false;
+}
+
+function endXR() {
+    session.end();
+}
+
+function generate3dObject() {
+    let icosahedron = new THREE.Mesh(new THREE.IcosahedronGeometry(7),new THREE.MeshPhongMaterial({color: 0xffcc00}));
+    // 3D Objekt wird vor der Kamera platziert (Position und Skalierung werden ermittelt)
+    const bbox = new THREE.Box3().expandByObject(icosahedron);
+    const centerBBox = bbox.getCenter(new THREE.Vector3());
+    icosahedron.position.add(centerBBox.multiplyScalar(-1));
+    icosahedron.position.add(new THREE.Vector3(0,0,-.65));
+    const sizeX = bbox.getSize(new THREE.Vector3()).x;
+    icosahedron.scale.multiplyScalar(.20 / sizeX);
+    return icosahedron;
+}
+</script>
+
+<script src="./js/infoBox.js" type="module"></script>
+</html>

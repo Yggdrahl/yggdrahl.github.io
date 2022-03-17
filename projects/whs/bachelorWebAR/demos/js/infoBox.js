@@ -33,7 +33,7 @@ let infoBGAnimation = infoBG.animate([
         offset: 0.0
     },
     {
-      left: "calc(50% - 42px)",
+      left: "calc(50% - 50px)",
       width: "100px",
       backgroundColor: "rgb(210,210,210)",
       offset: 1.0
