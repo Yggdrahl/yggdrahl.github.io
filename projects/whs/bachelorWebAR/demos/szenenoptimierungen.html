@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <meta http-equiv="content-language" content="de-DE" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <Title>
+                Demo: WebGL Shader Optimierungen
+            </Title>
+            <link rel="stylesheet" href="./css/demostyle.css" type="text/css" />
+            <link rel="shortcut icon" href="../assets/favicon.svg" type="image/x-icon">
+
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200&family=Orbitron&display=swap" rel="stylesheet">
+            <style>
+                canvas {
+                    display: block;
+                    height: 100%;
+                    width: 100%;
+                    padding: 0px;
+                    margin: 0px;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    z-index: 15;
+                }
+
+                .dashboard {
+                    transform: translateX(-50%);
+                    position: absolute;
+                    bottom: 24px;
+                    left: 50%;
+                    width: 95%;
+                    max-width: 640px;
+                    height: 160px;
+                    background-color: white;
+                    border-radius: 16px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: rgb(100,100,100);
+                    z-index: 25;
+                }
+
+                .controllPanel {
+                    position: absolute;
+                    display: inline-block;
+                    height: 100%;
+                    width: 33.3333%;
+                    padding: 0;
+                    margin: 0;
+                    top: 0px;
+                }
+
+                #cpLicht {
+                    left: 0px;
+                }
+                #cpEnv {
+                    transform: translateX(-50%);
+                    left: 50%;
+                }
+                #cpFarbe {
+                    right: 0px;
+                }
+
+                .statusLED {
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    position: absolute;
+                    transform: translateX(-50%);
+                    left: 50%;
+                    top: 24px;
+                    background-color: red;
+                }
+
+                .Label {
+                    position: absolute;
+                    transform: translateX(-50%);
+                    left: 50%;
+                    top: 72px;
+                    width: max-content;
+                }
+                .toggleButton {
+                    position: absolute;
+                    transform: translateX(-50%);
+                    left: 50%;
+                    top: 112px;
+                    width: max-content;
+                }
+            </style>
+    </head>
+
+
+<body>
+    <div class="mainScene">
+        <div class="infoBG"></div>
+        <div class="infoButton">
+            <img src="./assets/info.svg">
+        </div>
+        <div class="infoBox">
+            <div class="infoClose">
+                <img src="./assets/closeDark.svg">
+            </div>
+            <div class="infoScrollBox">
+                Diese Demo zeigt die unterschiedlichen Darstellung von Basis- und Physischen Shadern.
+                Über das User Interface können Änderungen an der Szene, den Materialien und dem Renderer vorgenommen werden, um die Darstellung der WebGL Inhalte zu verbessern.
+                <br><br>
+                Die verwendete CubeMap/EnvMap ist ein kostenloses Asset von Poliigon.com (non-commercial). 
+                <br><br>
+                Contains assets from <a href="https://www.poliigon.com">Poliigon.com</a> - Assets may not be redistributed
+                <br><br>
+                2022 Dennis Krämer
+            </div>
+            
+        </div>
+        
+        <canvas id="canvas"></canvas>
+
+        <div class="dashboard">
+            <div id="cpLicht" class="controllPanel">
+                <div class="statusLED"></div>
+                <div class="Label">Mehr Lichtquellen</div>
+                <button class="toggleButton">Aktivieren</button>
+            </div>
+            <div id="cpEnv" class="controllPanel">
+                <div class="statusLED"></div>
+                <div class="Label">EnvMap</div>
+                <button class="toggleButton">Aktivieren</button>
+            </div>
+            <div id="cpFarbe" class="controllPanel">
+                <div class="statusLED"></div>
+                <div class="Label">sRGB Farbmodus</div>
+                <button class="toggleButton">Aktivieren</button>
+            </div>
+
+        </div>
+        
+        
+    </div>
+
+</body>
+
+<script src="./js/infoBox.js" type="module"></script>
+<script src="./bibs/three.min.js"></script>
+<script src="./bibs/OrbitControls.js"></script>
+<script src="./bibs/GLTFLoader.js"></script>
+<script>
+
+    let resizeTimeout;
+    let autoRotate = true;
+    let autoRotateTimeout;
+
+    const canvas = document.querySelector('#canvas');
+    canvas.width = parseInt(window.getComputedStyle(canvas).getPropertyValue("width"));
+    canvas.height = parseInt(window.getComputedStyle(canvas).getPropertyValue("height"));
+    const renderer = new THREE.WebGLRenderer({canvas});
+
+    renderer.setClearColor( 0xcccccc, 1);//Hintergrundfarbe
+    
+    const fov = 75;
+    const aspect = canvas.width / canvas.height;
+    const near = 0.1;
+    const far = 5;
+
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
+    camera.position.z = 2;
+    camera.rotation.x = 1;
+    camera.rotation.set(.60,0,0);
+    camera.updateProjectionMatrix();
+
+    const scene = new THREE.Scene();
+        
+    const color1 = 0x808080;//0xFFFFFF
+    const color2 = 0xFFFFFF;
+    const intensity = 1;
+    const light01 = new THREE.DirectionalLight(color1, intensity);
+    const light02 = new THREE.DirectionalLight(color1, intensity);
+    const light03 = new THREE.AmbientLight(color2, intensity);
+    light01.position.set(-1, 2, 4);
+    light02.position.set(1, 2, -4);
+    scene.add(light01);
+    scene.add(light02);
+    scene.add(light03);
+        
+    
+
+    envMap = new THREE.TextureLoader().load( './assets/envMap01.jpg' );
+    envMap.mapping = THREE.EquirectangularReflectionMapping;
+    envMap.magFilter = THREE.LinearFilter;
+    envMap.minFilter = THREE.LinearMipMapLinearFilter;
+
+    //scene.background = envMap;
+
+    const controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+    function render(time) {
+
+        controls.update();
+        time *= 0.001;  // convert time to seconds
+
+        if(autoRotate) {
+            let speed = 0.002;
+            //scene.rotation.x -= speed;
+            scene.rotation.y -= speed;
+            //scene.rotation.z -= speed;
+        }
+        
+    
+        renderer.render(scene, camera);
+
+        requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    canvas.onmousedown = function() {
+        autoRotate = false;
+        clearTimeout(autoRotateTimeout);
+        autoRotateTimeout = null;
+        
+        autoRotateTimeout = setTimeout(function() {
+            autoRotate = true;
+        },5000);    
+            
+    }
+    
+
+    
+
+    //---
+
+    
+    const loader = new THREE.GLTFLoader();
+    loader.load("./assets/Shadertest.glb", function(gltf) {
+        scene.add(gltf.scene);
+        
+
+        // center and scale the object:
+    const bbox = new THREE.Box3().expandByObject(gltf.scene);
+    // center the model:
+    const centerBBox = bbox.getCenter(new THREE.Vector3());
+    gltf.scene.position.add(centerBBox.multiplyScalar(-1));
+    // scale the model according to its width:
+    const sizeX = bbox.getSize(new THREE.Vector3()).x;
+    const sizeY = bbox.getSize(new THREE.Vector3()).y;
+    gltf.scene.position.set(0,(sizeY/2.0),0);
+    gltf.scene.scale.multiplyScalar(1.75/sizeX);
+    addShading(gltf.scene);
+    });
+
+    function addShading(gltfScene) {
+
+        gltfScene.traverse(function (child) {
+            if (child.isMesh) {
+                if(child.material.name.indexOf("#Phong") >= 0) {
+                    
+                    let material = new THREE.MeshPhongMaterial();
+                    material.color.r = child.material.color.r;
+                    material.color.g = child.material.color.g;
+                    material.color.b = child.material.color.b;
+                    child.material = material;
+                    child.material.needsUpdate = true;
+                }
+            }
+        });
+        
+    }
+    
+    //---
+
+    function addEnvMap(add) {
+
+        scene.traverse(function (child) {
+            if (child.isMesh) {
+                if(add) {
+                    child.material.envMap = envMap;
+                } else {
+                    child.material.envMap = null;
+                }
+                child.material.needsUpdate = true;
+            }
+        });
+    }
+
+    window.onresize = function() {
+
+        if(resizeTimeout) {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = null;
+        }
+        resizeTimeout = setTimeout(function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = null;
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let aspectTemp = canvas.width / canvas.height;
+            camera.aspect = aspectTemp;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.width, canvas.height);
+
+        },250);
+        
+
+    }
+
+    let lichtActive = true;
+    let envActive = false;
+    let farbeActive = false;
+
+    const lichtButton = document.getElementById("cpLicht").querySelector('.toggleButton');
+    const lichtLED = document.getElementById("cpLicht").querySelector('.statusLED');
+    lichtButton.onclick = toggleLicht;
+    lichtLED.onclick = toggleLicht;
+
+    const envButton = document.getElementById("cpEnv").querySelector('.toggleButton');
+    const envLED = document.getElementById("cpEnv").querySelector('.statusLED');
+    envButton.onclick = toggleEnv;
+    envLED.onclick = toggleEnv;
+
+    const farbeButton = document.getElementById("cpFarbe").querySelector('.toggleButton');
+    const farbeLED = document.getElementById("cpFarbe").querySelector('.statusLED');
+    farbeButton.onclick = toggleFarbe;
+    farbeLED.onclick = toggleFarbe;
+
+    checkUI();
+
+    function checkUI() {
+        if(lichtActive) {
+            lichtLED.style.backgroundColor = "lime";
+            lichtButton.innerHTML = "Deaktivieren";
+        } else {
+            lichtLED.style.backgroundColor = "red";
+            lichtButton.innerHTML = "Aktivieren";
+        }
+
+        if(envActive) {
+            envLED.style.backgroundColor = "lime";
+            envButton.innerHTML = "Deaktivieren";
+        } else {
+            envLED.style.backgroundColor = "red";
+            envButton.innerHTML = "Aktivieren";
+        }
+
+        if(farbeActive) {
+            farbeLED.style.backgroundColor = "lime";
+            farbeButton.innerHTML = "Deaktivieren";
+        } else {
+            farbeLED.style.backgroundColor = "red";
+            farbeButton.innerHTML = "Aktivieren";
+        }
+    }
+
+    function toggleLicht() {
+        lichtActive = !lichtActive;
+        checkUI();
+        if(!lichtActive) {
+            scene.remove(light01);
+            scene.remove(light02);
+        } else {
+            scene.add(light01);
+            scene.add(light02);
+        }
+    }
+
+    function toggleEnv() {
+        envActive = !envActive;
+        checkUI();
+        addEnvMap(envActive);
+    }
+
+    function toggleFarbe() {
+        farbeActive = !farbeActive;
+        checkUI();
+        if(farbeActive) {
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+        } else {
+            renderer.toneMapping = 1;
+            renderer.outputEncoding = 3000;
+        }
+        
+    }
+
+    
+
+
+</script>
+</html>
