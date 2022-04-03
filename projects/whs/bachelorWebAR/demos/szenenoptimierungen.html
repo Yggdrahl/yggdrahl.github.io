@@ -186,7 +186,7 @@
         
     
 
-    envMap = new THREE.TextureLoader().load( './assets/envMap01.jpg' );
+    envMap = new THREE.TextureLoader().load( './assets/EnvMap01.jpg' );
     envMap.mapping = THREE.EquirectangularReflectionMapping;
     envMap.magFilter = THREE.LinearFilter;
     envMap.minFilter = THREE.LinearMipMapLinearFilter;
@@ -232,7 +232,7 @@
 
     
     const loader = new THREE.GLTFLoader();
-    loader.load("./assets/Shadertest.glb", function(gltf) {
+    loader.load("./assets/ShaderTest.glb", function(gltf) {
         scene.add(gltf.scene);
         
 
