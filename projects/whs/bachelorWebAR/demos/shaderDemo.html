@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <meta http-equiv="content-language" content="de-DE" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <Title>
+                Demo: WebGL Shader Demo
+            </Title>
+            <link rel="stylesheet" href="./css/demostyle.css" type="text/css" />
+            <link rel="shortcut icon" href="../assets/favicon.svg" type="image/x-icon">
+
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200&family=Orbitron&display=swap" rel="stylesheet">
+            <style>
+                canvas {
+                    display: block;
+                    height: 100%;
+                    width: 100%;
+                    padding: 0px;
+                    margin: 0px;
+                    position: absolute;
+                    top: 0px;
+                    left: 0px;
+                    z-index: 15;
+                }
+
+                .dashboard {
+                    transform: translateX(-50%);
+                    position: absolute;
+                    bottom: 24px;
+                    left: 50%;
+                    
+                    width: max-content;
+                    height: max-content;
+                    background-color: white;
+                    border-radius: 16px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: rgb(100,100,100);
+                    z-index: 25;
+                }
+
+                ul {
+                    list-style-type: none;
+                    padding: 10px 30px 10px 30px;
+                }
+
+                .dashboard li * {
+                    display: inline-block;
+                    margin-bottom: 8px;
+                }
+
+                .statusLEDPlaceholder {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background-color: rgb(200,200,200);
+                }
+
+                .statusLED {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background-color: red;
+                }
+
+            </style>
+    </head>
+
+
+<body>
+    <div class="mainScene">
+        <div class="infoBG"></div>
+        <div class="infoButton">
+            <img src="./assets/info.svg">
+        </div>
+        <div class="infoBox">
+            <div class="infoClose">
+                <img src="./assets/closeDark.svg">
+            </div>
+            <div class="infoScrollBox">
+                Diese Demo ermöglicht das Testen und Konfigurieren der wichtigsten WebGL Shader.
+                <br><br>
+                <b>Lizenzen für verwendete Bilder von Dritten</b>
+                <br>
+                <ul>
+                    <li>Equirectangular Map - <a href="https://www.flickr.com/photos/jonragnarsson/2294472375/">Jon Ragnarsson</a><br><a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC license</a> (NonCommercial)</li>
+                </ul>
+                Der Code dieser Demo ist <a href="https://github.com/Yggdrahl/AbschlussarbeitWebAR/blob/main/demos/shaderDemo.html">hier</a> zu finden.
+                <br><br>
+                2022 Dennis Krämer
+            </div>
+            
+        </div>
+        
+        <canvas id="canvas"></canvas>
+
+        <div class="dashboard">
+            <ul>
+                <li id="shaderDashboard">
+                    <div class="statusLEDPlaceholder"></div>
+                    <div class="Label">Shader/Material </div>
+                    <select id="shaderAuswahl">
+                        <option value="0">Basic</option>
+                        <option value="1">Lambert</option>
+                        <option value="2">Phong</option>
+                        <option value="3">Standard (PBR)</option>
+                        <option value="4">Physical (PBR)</option>
+                    </select>
+                </li>
+                <li id="colorPickerDashboard">
+                    <div class="statusLEDPlaceholder"></div>
+                    <div class="Label">Farbe </div>
+                    <input type="color">
+                </li>
+                <li id="envMapDashboard">
+                    <div class="statusLED"></div>
+                    <div class="Label">EnvMap </div>
+                    <button class="toggleButton">Aktivieren</button>
+                </li>
+                <li id="farbraumDashboard">
+                    <div class="statusLED"></div>
+                    <div class="Label">Farbencoder </div>
+                    <button class="toggleButton">Aktivieren</button>
+                </li>
+            </ul>            
+        </div>
+        
+        
+    </div>
+
+</body>
+
+<script src="./js/infoBox.js" type="module"></script>
+<script src="./bibs/three.min.js"></script>
+<script src="./bibs/OrbitControls.js"></script>
+<script>
+
+    let resizeTimeout;
+
+    const canvas = document.querySelector('#canvas');
+    canvas.width = parseInt(window.getComputedStyle(canvas).getPropertyValue("width"));
+    canvas.height = parseInt(window.getComputedStyle(canvas).getPropertyValue("height"));
+    const renderer = new THREE.WebGLRenderer({canvas});
+
+    renderer.setClearColor( 0xcccccc, 1);//Hintergrundfarbe
+    
+    const fov = 75;
+    const aspect = canvas.width / canvas.height;
+    const near = 0.1;
+    const far = 5;
+
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
+    camera.position.z = 2;
+    camera.rotation.x = 1;
+    camera.rotation.set(.60,0,0);
+    camera.updateProjectionMatrix();
+
+    const scene = new THREE.Scene();
+        
+    const color1 = 0x808080;//0xFFFFFF
+    const color2 = 0xFFFFFF;
+    const intensity = 1;
+    const light01 = new THREE.DirectionalLight(color1, intensity);
+    const light03 = new THREE.AmbientLight(color2, intensity / 2);
+    light01.position.set(-1, 2, .5);
+    scene.add(light01);
+    scene.add(light03);
+    
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    
+
+    envMap = new THREE.TextureLoader().load( './assets/EnvMap01.jpg' );
+    envMap.mapping = THREE.EquirectangularReflectionMapping;
+    envMap.magFilter = THREE.LinearFilter;
+    envMap.minFilter = THREE.LinearMipMapLinearFilter;
+
+    let backgroundMesh;
+    const shader = THREE.ShaderLib.equirect;
+        const bgMaterial = new THREE.ShaderMaterial({
+            fragmentShader: shader.fragmentShader,
+            vertexShader: shader.vertexShader,
+            uniforms: shader.uniforms,
+            depthWrite: false,
+            side: THREE.BackSide,
+        });
+        bgMaterial.uniforms.tEquirect.value = envMap;
+        const plane = new THREE.BoxBufferGeometry(2, 2, 2);
+        backgroundMesh = new THREE.Mesh(plane, bgMaterial);
+
+    const controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+    function render(time) {
+
+        controls.update();        
+        backgroundMesh.position.copy(camera.position);
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    const startMaterial = 3;
+    const shinines = 200;
+    const roughness = 0.1;
+    const metalness = 0;
+    const basicMaterial = new THREE.MeshBasicMaterial ({ color : 0x00a4ff });
+    const lambertMaterial = new THREE.MeshLambertMaterial ({ color : 0x00a4ff });
+    const phongMaterial = new THREE.MeshPhongMaterial ({ color : 0x00a4ff });
+    const standardMaterial = new THREE.MeshStandardMaterial ({ color : 0x00a4ff });
+    const physicalMaterial = new THREE.MeshPhysicalMaterial ({ color : 0x00a4ff });
+    phongMaterial.shininess = shinines;
+    standardMaterial.roughness = roughness;
+    physicalMaterial.roughness = roughness;
+    standardMaterial.metalness = metalness;
+    physicalMaterial.metalness = metalness;
+
+    const geometry = new THREE.SphereGeometry ( .75,48,48 );
+    const sphere = new THREE.Mesh(geometry , basicMaterial );
+    scene.add( sphere );
+        
+
+    function changeShader() {
+
+        switch (parseInt(shaderAuswahl.value)) {
+            case 0:
+                sphere.material = basicMaterial;
+                break;
+            case 1:
+                sphere.material = lambertMaterial;
+                break;
+            case 2:
+                sphere.material = phongMaterial;
+                break;
+            case 3:
+                sphere.material = standardMaterial;
+                break;
+            case 4:
+                sphere.material = physicalMaterial;
+                break;
+
+            default:
+                break;
+        }
+
+        addEnvMap();
+
+        sphere.material.needsUpdate = true;
+            
+    }
+    
+    function addEnvMap(add) {
+
+        if(!add) {
+            add = envActive;
+        }
+
+        sphere.traverse(function (child) {
+            if (child.isMesh) {
+                if(add) {
+                    child.material.envMap = envMap;
+                } else {
+                    child.material.envMap = null;
+                }
+                child.material.needsUpdate = true;
+            }
+        });
+    }
+
+    window.onresize = function() {
+
+        if(resizeTimeout) {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = null;
+        }
+        resizeTimeout = setTimeout(function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = null;
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let aspectTemp = canvas.width / canvas.height;
+            camera.aspect = aspectTemp;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.width, canvas.height);
+
+        },250);
+        
+
+    }
+
+    let envActive = false;
+    let farbeActive = true;
+
+    const envButton = document.getElementById("envMapDashboard").querySelector('.toggleButton');
+    const envLED = document.getElementById("envMapDashboard").querySelector('.statusLED');
+    envButton.onclick = toggleEnv;
+    envLED.onclick = toggleEnv;
+
+    const farbeButton = document.getElementById("farbraumDashboard").querySelector('.toggleButton');
+    const farbeLED = document.getElementById("farbraumDashboard").querySelector('.statusLED');
+    farbeButton.onclick = toggleFarbe;
+    farbeLED.onclick = toggleFarbe;
+
+    const colorPicker = document.getElementById("colorPickerDashboard").querySelector('input');
+    let rHex = (sphere.material.color.r * 255).toString(16);
+    let gHex = (sphere.material.color.g * 255).toString(16);
+    let bHex = (sphere.material.color.b * 255).toString(16);
+    if(rHex == "0") {rHex = "00";}
+    if(gHex == "0") {gHex = "00";}
+    if(bHex == "0") {bHex = "00";}
+    colorPicker.value = "#" + rHex  + "" + gHex + "" + bHex;
+    colorPicker.onchange = function() {
+
+        let cpValue = hexToRGB(colorPicker.value);
+
+        console.log(cpValue.r * 255 + ", " + cpValue.g * 255 + ", " + cpValue.b * 255);
+        
+        basicMaterial.color.r = cpValue.r;
+        basicMaterial.color.g = cpValue.g;
+        basicMaterial.color.b = cpValue.b;
+        basicMaterial.needsUpdate = true;
+
+        lambertMaterial.color.r = cpValue.r;
+        lambertMaterial.color.g = cpValue.g;
+        lambertMaterial.color.b = cpValue.b;
+        lambertMaterial.needsUpdate = true;
+
+        phongMaterial.color.r = cpValue.r;
+        phongMaterial.color.g = cpValue.g;
+        phongMaterial.color.b = cpValue.b;
+        phongMaterial.needsUpdate = true;
+
+        standardMaterial.color.r = cpValue.r;
+        standardMaterial.color.g = cpValue.g;
+        standardMaterial.color.b = cpValue.b;
+        standardMaterial.needsUpdate = true;
+
+        physicalMaterial.color.r = cpValue.r;
+        physicalMaterial.color.g = cpValue.g;
+        physicalMaterial.color.b = cpValue.b;
+        physicalMaterial.needsUpdate = true;
+        
+    }
+
+    function hexToRGB(hex) {
+            let r = 0, g = 0, b = 0;
+            if (hex.length == 4) {
+                r = "0x" + hex[1] + hex[1];
+                g = "0x" + hex[2] + hex[2];
+                b = "0x" + hex[3] + hex[3];
+            } else if (hex.length == 7) {
+                r = "0x" + hex[1] + hex[2];
+                g = "0x" + hex[3] + hex[4];
+                b = "0x" + hex[5] + hex[6];
+            };
+
+            return {
+                r: (+r) / 255,
+                g: (+g) / 255,
+                b: (+b) / 255
+            };
+    }
+
+
+    const shaderAuswahl = document.getElementById('shaderAuswahl');
+    shaderAuswahl.onchange = changeShader;
+    shaderAuswahl.value = startMaterial;
+    changeShader();
+    checkUI();
+
+    function checkUI() {
+
+        if(envActive) {
+            envLED.style.backgroundColor = "lime";
+            envButton.innerHTML = "Deaktivieren";
+        } else {
+            envLED.style.backgroundColor = "red";
+            envButton.innerHTML = "Aktivieren";
+        }
+
+        if(farbeActive) {
+            farbeLED.style.backgroundColor = "lime";
+            farbeButton.innerHTML = "Deaktivieren";
+        } else {
+            farbeLED.style.backgroundColor = "red";
+            farbeButton.innerHTML = "Aktivieren";
+        }
+    }
+
+
+    function toggleEnv() {
+        envActive = !envActive;
+        checkUI();
+        addEnvMap(envActive);
+        if(envActive) {            
+            scene.add(backgroundMesh);
+        } else {
+            scene.remove(backgroundMesh);
+        }
+    }
+
+    function toggleFarbe() {
+        farbeActive = !farbeActive;
+        checkUI();
+        if(farbeActive) {
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+        } else {
+            renderer.toneMapping = 1;
+            renderer.outputEncoding = 3000;
+        }
+        
+    }
+
+    
+
+
+</script>
+</html>
