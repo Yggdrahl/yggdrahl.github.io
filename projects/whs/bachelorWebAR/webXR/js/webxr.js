@@ -102,10 +102,8 @@ function calcLoadingProgress(lengthComputable) {
     ladebalken.style.width = ((result / assetCount) * 100) + "%";
     return ((result / assetCount) * 100);
   } else {
-    console.log("Alternative Berechnung");
     result = (loadedModels / assetCount) * 100;
     ladebalken.style.width = result + "%";
-    console.log("Loading: " + result + "%");
     return result;
   }
 
@@ -213,8 +211,9 @@ async function activateXR() {
         //currentWheelFront = currentWheelBack.clone();
 
         if(!lengthComputableServer) {
-          webxrUiAnimation.play();//###########################################
-          loadingScreenAnimation.play();//#####################################
+          ladebalken.style.width = "100%";
+          webxrUiAnimation.play();//###
+          loadingScreenAnimation.play();//###
         }
         
 
