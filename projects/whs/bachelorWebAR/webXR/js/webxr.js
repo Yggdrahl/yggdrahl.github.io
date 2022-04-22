@@ -49,6 +49,8 @@ let loadedModels = 0;
 let touchedOnce = false; //Für die 'interactionPrompt'
 let interactionPromptTimeout;
 
+let lengthComputableServer = true;
+
 // QubeMap/EnvMap---
 let envMap = null;
 /*
@@ -100,6 +102,7 @@ function calcLoadingProgress(lengthComputable) {
     ladebalken.style.width = ((result / assetCount) * 100) + "%";
     return ((result / assetCount) * 100);
   } else {
+    console.log("Alternative Berechnung");
     result = (loadedModels / assetCount) * 100;
     ladebalken.style.width = result + "%";
     console.log("Loading: " + result + "%");
@@ -209,6 +212,12 @@ async function activateXR() {
         await loader.load(assets[bikeId].components.wheels[0], function(gltf) {currentWheelBack = gltf.scene; addEnvMap(gltf); currentWheelFront = currentWheelBack.clone();  checkLoading();}, null, loader_onError);
         //currentWheelFront = currentWheelBack.clone();
 
+        if(!lengthComputableServer) {
+          webxrUiAnimation.play();//###########################################
+          loadingScreenAnimation.play();//#####################################
+        }
+        
+
         checkLoading();        
       }
     }
@@ -254,9 +263,10 @@ async function activateXR() {
         tmpLadeObjekt.progress = (xhr.loaded / xhr.total);
         ladeArray.push(tmpLadeObjekt);
       }
+      lengthComputableServer = xhr.lengthComputable;
       let progress = calcLoadingProgress(xhr.lengthComputable);
       //console.log(progress);
-      if(progress >= 100) {
+      if(progress >= 100 && lengthComputableServer) {
         webxrUiAnimation.play();
         loadingScreenAnimation.play();
         //setTimeout(function() { //Gibt dem Hinzufuegen der KindElemente zur Szene etwas Spielraum (manchmal ist das Child-Array unvollstaending)
