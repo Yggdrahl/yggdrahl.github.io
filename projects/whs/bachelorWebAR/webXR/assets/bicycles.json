@@ -49,7 +49,7 @@
         "initialGltf":"./assets/xrBikes/hollandrad/init.glb",
         "components": {
             "frames":[
-                "./assets/xrBikes/hollandrad/frameblau.glb",
+                "./assets/xrBikes/hollandrad/frameBlau.glb",
                 "./assets/xrBikes/hollandrad/frameGelb.glb",
                 "./assets/xrBikes/hollandrad/frameRot.glb"
             ],
