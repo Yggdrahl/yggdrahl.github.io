@@ -247,7 +247,7 @@ async function activateXR() {
       }
 
       let progress = calcLoadingProgress();
-      //console.log(progress);
+      console.log("progress: " + progress + "loadedModells: " + loadedModels);
       if(progress >= 100) {
         webxrUiAnimation.play();
         loadingScreenAnimation.play();
