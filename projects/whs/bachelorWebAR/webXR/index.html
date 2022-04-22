@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="de-DE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="./assets/favicon.svg" />
+   
+    
+    <title>WebAR</title>
+    
+    <script src="./bibs/three.min.js"></script>
+    <script src="./bibs/GLTFLoader.js"></script>
+    <script src="./bibs/qrjs2.min.js"></script>
+    <script src="./bibs/mindar-image-three.prod.js"></script>
+
+    <script src="./js/index.js"></script>
+    <script src="./js/webxr.js"></script>
+    <script src="./js/imageTracking.js" type="module"></script>
+
+  </head>
+
+  <body>
+
+    <div class="mainScene">
+
+      <div class="webxrUI">
+        <div class="loadingScreen">
+          
+            <div class="ladebalken"></div>
+            <p>Lade 3D Modelle...</p>
+          
+
+        </div>
+        <div class="xrMenu">
+          <div class="menuLeft"><!-- Menu auf der linken Siete -->
+            <button id="btn_xrClose"><img src="./assets/close.svg"></button>
+            <button id="btn_xrReset"><img src="./assets/reset.svg"></button>
+          </div>
+          <div class="menuRight">
+            <div class="buttonWrapper">
+              <button id="btn_frame"><img src="./assets/frame.svg"></button>
+              <button id="btn_saddle"><img src="./assets/saddle.svg"></button>
+              <button id="btn_wheels"><img src="./assets/wheel.svg"></button>
+            </div>
+          </div>
+          <img id="stabilization" src="./assets/stabilization.png">
+          <img id="interactionPrompt" src="./assets/touchPromptAnimated.png">
+          <div class="konfiguratorMenu">
+
+          </div>
+        </div>
+        
+          
+        
+      </div>
+
+      <div class="mindarUI">
+        <!--<div class="imageSpinnerWrapper"><div></div></div>-->
+        <div class="mindMenu">
+          <div class="menuLeft"><!-- Menu auf der linken Siete -->
+            <button id="btn_mindClose"><img src="./assets/close.svg"></button>
+          </div>
+        </div>
+        <div class="canvasContainer"></div>
+      </div>
+
+        <div class="menuWrapper">
+
+          
+
+          <div class="menu">
+            <div class="toolbar">
+              <button onclick="enterFullscreen()"><img src="./assets/fullscreen.svg"></button>
+            </div>
+            <div class="tabButtons">
+              <button onclick="changeTab(0)">Fahrrad platzieren</button>
+              <button onclick="changeTab(1)">Bild scannen</button>
+              <button onclick="changeTab(2)">Rechtliche Hinweise</button>
+              
+            </div>
+        
+          </div>
+          <div class="tabs">
+        
+            <div id="bicycles" class="tab">
+              
+              <!---->
+              <div class="thumbnailWrapper">
+
+                <!--<div class="fahrradWrapper" onclick="selectBike(0)">
+                  <div class="thumbnail">
+                    <img class="thumbnailImage" src="./assets/thumb_webxr.svg">
+                  </div>
+                  <div class="fahrradText"><p></p></div>
+                </div>-->
+
+                
+  
+               
+              </div>
+              
+              <div class="webxrMenu">
+                <p></p>
+                <button onclick="activateXR()"><img src="./assets/arIcon.svg"><p>Platzieren</p></button>
+              </div>
+
+              <div class="supportDialog" onclick="closeSupportDialog()">
+                
+                <p>
+                  <img src="./assets/error.svg"><br>
+                  Ihr Gerät unterstützt kein <b>WebXR</b> oder hat kein AR Framework installiert.<br><br>
+                  Aktuell wird nur der <b>Chrome</b>-Browser auf Android unterstützt in Verbindung mit dem <b>ARCore</b> Framework.
+                </p>
+              </div>
+
+            </div>
+            <div id="imageTracking" class="tab">
+              <div class="imageTrackingWrapper">
+                Erweitere Prospektbilder mit Augmented Reality
+                <br>
+                <button onclick="activateImageTracking()">Starte Bildscann</button>
+                <br>
+                <a href="./assets/imageTracking.jpg">Bild öffnen</a>
+              </div>
+              
+            </div><!-- Hier fehlt noch der gesamte Text + Button zum Start des ImgTrackings-->
+            <div id="about" class="tab">
+              Rechtliche Hinweise
+              <br>
+              <br>
+              <b>Lizenzen für verwendete Bilder von Dritten</b>
+              <br>
+              <ul>
+                <li>Equirectangular Map - <a href="https://www.flickr.com/photos/jonragnarsson/2294472375/">Jon Ragnarsson</a><br><a href="https://creativecommons.org/licenses/by-nc-sa/2.0/">CC license</a> (NonCommercial)</li>
+              </ul>
+              <br>
+              2022 Dennis Krämer
+            
+            </div>
+
+            <div id="desktopHint" class="tab">
+              <div class="center">
+                Die AR Webanwendung muss auf mobilen Endgeräten ausgeführt werden.
+                <br><br>
+                <div class="qrCode"></div>
+                <br>
+                Öffne diesen Link auf deinem Smartphone oder Tablet.
+              </div>
+              
+            </div>
+            <div id="orientationHint" class="tab">
+              <div class="textbox">
+                <button class="icon" onclick="enterFullscreen()"><img src="./assets/fullscreen.svg"></button>
+                <p>Es wird empfohlen die Webanwendung in der horizontalen Ansicht oder direkt im Vollbild zu nutzen.</p>
+              </div>
+            </div>
+        
+          </div>
+        </div>
+        
+
+    </div>
+
+    
+
+  </body>
+
+
+</html>

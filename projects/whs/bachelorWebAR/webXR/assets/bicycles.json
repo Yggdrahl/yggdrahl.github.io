@@ -1,0 +1,64 @@
+[
+    {
+        "id": 0,
+        "name": "Damenrad",
+        "thumbnail": "./assets/xrBikes/damenrad/thumb.jpg",
+        "initialGltf":"./assets/xrBikes/damenrad/init.glb",
+        "components": {
+            "frames":[
+                "./assets/xrBikes/damenrad/frameOrange.glb",
+                "./assets/xrBikes/damenrad/frameGelb.glb",
+                "./assets/xrBikes/damenrad/frameMetallic.glb"
+            ],
+            "wheels":[
+                "./assets/xrBikes/universal/defaultReifen.glb",
+                "./assets/xrBikes/universal/offroadReifen.glb"
+            ],
+            "saddles":[
+                "./assets/xrBikes/universal/defaultSattel.glb",
+                "./assets/xrBikes/universal/sportSattel.glb"
+            ]
+        }
+    },
+    {
+        "id": 1,
+        "name": "Herrenrad",
+        "thumbnail": "./assets/xrBikes/herrenrad/thumb.jpg",
+        "initialGltf":"./assets/xrBikes/herrenrad/init.glb",
+        "components": {
+            "frames":[
+                "./assets/xrBikes/herrenrad/frameGrau.glb",
+                "./assets/xrBikes/herrenrad/frameWHS.glb",
+                "./assets/xrBikes/herrenrad/frameMetallic.glb",
+                "./assets/xrBikes/herrenrad/frameSchwarz.glb"
+            ],
+            "wheels":[
+                "./assets/xrBikes/universal/offroadReifen.glb",
+                "./assets/xrBikes/universal/defaultReifen.glb"
+            ],
+            "saddles":[
+                "./assets/xrBikes/universal/sportSattel.glb",
+                "./assets/xrBikes/universal/defaultSattel.glb"
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "name": "Hollandrad",
+        "thumbnail": "./assets/xrBikes/hollandrad/thumb.jpg",
+        "initialGltf":"./assets/xrBikes/hollandrad/init.glb",
+        "components": {
+            "frames":[
+                "./assets/xrBikes/hollandrad/frameblau.glb",
+                "./assets/xrBikes/hollandrad/frameGelb.glb",
+                "./assets/xrBikes/hollandrad/frameRot.glb"
+            ],
+            "wheels":[
+                "./assets/xrBikes/universal/defaultReifen.glb"
+            ],
+            "saddles":[
+                "./assets/xrBikes/universal/defaultSattel.glb"
+            ]
+        }
+    }
+]

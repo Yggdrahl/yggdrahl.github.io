@@ -1,0 +1,731 @@
+body, html {
+    font-family: sans-serif;
+}
+body {
+    background-color: rgb(235, 235, 235);
+}
+
+.center {
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+
+.mainScene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.menuWrapper {
+    background-color: transparent;
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+}
+
+.menu {
+    background-color: white;
+    position: absolute;
+    display: inline-block;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 180px;
+    border-style: solid;
+    border-width: 0px 1px 0px 0px;
+    border-color: gray;
+    box-shadow: 4px 0px 8px grey;
+    z-index: 1000;
+    
+}
+
+.menu .toolbar {
+    position: relative;
+    display: block;
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: (100% - 16px);
+    height: 40px;
+    padding: 0px 8px 0px 16px;
+}
+
+.menu .toolbar button {
+    position: relative;
+    display: block;
+    background-color: transparent;
+    top: 50%;
+    left: 0;
+    height: 30px;
+    transform: translateY(-50%);
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.menu .toolbar button img {
+    height: 24px;
+}
+
+.menu .tabButtons {
+    height: calc(100% - 40px); /*ohne die Toolbar*/
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.menu .tabButtons button {
+    position: relative;
+    display: block;
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    
+    padding: 15px 25px;
+    /*font-size: 13px;*/
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    border: solid;
+    border-color: gray;
+    border-width: 0px 0px 1px 0px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.menu .tabButtons button.active {
+    background-color: #ffcc00;
+    color: white;
+}
+
+.tabs {
+    position: absolute;
+    display: inline-block;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: calc(100% - 181px);
+    z-index: 100;
+}
+
+.tabs .tab {
+    position: relative;
+    padding: 12px;
+    width: calc(100% - 24px);
+    height: calc(100% - 24px);
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: none;
+    background-color: rgb(235, 235, 235);
+}
+
+.tabs .tab.active {
+    display: block;
+}
+
+.tabs .tab .qrCode {
+    width: 100%;
+    max-width: 250px;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    padding: 0;
+    height: max-content;
+    box-shadow: 0px 0px 8px grey;
+}
+
+.tabs #desktopHint .center {
+    width: 100%;
+    max-width: 250px;
+}
+
+.tabs #orientationHint .textbox {
+    background-color: #ffcc00;
+    position: relative;
+    height: max-content;
+    width: calc(100% - 16px);
+    padding: 8px;
+    max-width: 280px;
+    margin: 12px 0px 0px 0px;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0px 2px 4px grey;
+}
+
+.tabs #orientationHint .textbox:before {
+    content:"";
+    background-color: transparent;
+    position: absolute;
+    top:-24px;
+    left: 16px;
+    border: solid 12px transparent;
+    border-bottom-color: #ffcc00;
+    pointer-events: none;
+}
+
+.tabs #orientationHint .icon {
+    position: relative;
+    display: block;
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    -webkit-tap-highlight-color: transparent;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 40px;
+    width: 60px;
+    margin: 4px 0px 8px 0px;
+    background-color: rgba(255,255,255,.5);
+    
+    border-radius: 8px;
+}
+
+.tabs #orientationHint .icon img {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    height: 24px;
+    margin: 0;
+}
+
+.tabs #orientationHint .textbox p {
+    margin: 0px;
+}
+
+.tabs #bicycles .thumbnailWrapper .fahrradWrapper {
+    
+    position: relative;
+    display: inline-block;
+    margin: 8px;
+    width: calc(25% - 20px);/*24px padding von außen (je 12px)*/
+    height: 200px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    box-shadow: 0px 2px 4px grey;
+    /*
+    text-decoration: none;
+    outline: none;
+    padding: 0px;
+    border-style: none;
+    */
+}
+
+.tabs #bicycles .thumbnailWrapper .fahrradWrapper:active {
+    
+    /*background-color: rgb(220,220,220);*/
+    opacity: .5;
+    
+}
+
+.tabs #bicycles .thumbnailWrapper .fahrradWrapper .thumbnail {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    /*background-color: #ffcc00;*/
+    pointer-events: none;
+}
+
+.tabs #bicycles .thumbnailWrapper .fahrradWrapper .thumbnail > img {
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    height: 100%;
+}
+
+.tabs #bicycles .thumbnailWrapper .fahrradWrapper .fahrradText {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.tabs #bicycles .thumbnailWrapper .fahrradWrapper .fahrradText > p {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 8px;
+    margin: 0px;
+}
+
+.tabs #bicycles .thumbnailWrapper {
+    margin: -12px;
+    position: relative;
+    transform: translateX(-50%);
+    left: calc(50% + 13px);
+    width: 100%;
+    max-width: 1000px;
+}
+
+@media screen and (max-width: 1079px) {
+
+    .tabs #bicycles .thumbnailWrapper .fahrradWrapper {
+        width: calc(33.33% - 20px);       
+    }
+
+}
+
+@media screen and (max-width: 819px) {
+
+    .tabs #bicycles .thumbnailWrapper .fahrradWrapper {
+        width: calc(50% - 19px);       
+    }
+
+}
+
+@media screen and (max-width: 619px) {
+
+    .tabs #bicycles .thumbnailWrapper .fahrradWrapper {
+        width: calc(100% - 17px);       
+    }
+
+}
+
+.tabs #bicycles .supportDialog {
+    display: none;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: calc(100% - 181px);
+    height: 100%;
+    background-color: rgba(0,0,0,.35);
+}
+
+.tabs #bicycles .supportDialog p {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 14px 8px;
+    width: 80%;
+    max-width: 300px;
+    box-shadow: 0px 2px 4px grey;
+}
+
+.tabs #bicycles .supportDialog p img  {
+    height: 60px;
+    position: relative;
+    transform: translateX(-50%);
+    top: 0px;
+    left: 50%;
+    margin: 0px 0px 12px 0px;
+}
+
+.tabs #bicycles .webxrMenu {
+    display: none;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: calc(100% - 221px);/*181 + 40*/
+    height: 69px;
+    background-color: white;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-color: rgb(200, 200, 200);
+    padding: 8px 20px 8px 20px;
+}
+
+.webxrMenu > p {
+    display: inline-block;
+    position: relative;
+    font-size: 24px;
+    margin: 0px;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+.webxrMenu button {
+    display: inline-block;
+    position: absolute;
+    background-color: #ffcc00;
+    top: 50%;
+    right: 20px;
+    /*width: calc(100% - 40px);*/
+    padding: 8px;
+    height: max-content;
+    transform: translateY(-50%);
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: white;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.webxrMenu button:active {
+    background-color: #cca300;
+}
+
+@media screen and (max-width: 484px) {
+
+    .webxrMenu button {
+        
+        width: calc(100% - 40px);
+        
+    }
+
+    .webxrMenu > p {
+        display: none;
+    }
+
+}
+
+.webxrMenu button img {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    padding:  0px;
+    margin: 0px 8px 0px 0px;
+    pointer-events: none;
+}
+
+.webxrMenu button p {
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    transform: translateY(-50%);
+    top: 50%;
+    pointer-events: none;
+}
+
+/*==================================================================*/
+
+.webxrUI {
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(235, 235, 235,1);
+}
+
+.webxrUI .loadingScreen {
+    position: absolute;
+    display: block;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 69px;
+    background-color: white;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-color: rgb(200, 200, 200);
+    padding: 0px;
+}
+
+.webxrUI .loadingScreen .ladebalken {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    height: 8px;
+    background-color: #ffcc00;
+}
+
+.webxrUI .loadingScreen p {
+    position: absolute;
+    transform: translateY(-50%);
+    top: calc(50% + 4px);
+    left: 8px;
+    margin: 0px;
+}
+
+.webxrUI .xrMenu {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+}
+
+.webxrUI .xrMenu .menuLeft {
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: max-content;
+    
+}
+
+.webxrUI .xrMenu .menuLeft button {
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+    padding: 0px;
+    /*transform: translateX(-50%);*/
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: visible;
+}
+
+.webxrUI .xrMenu button img {
+    position: relative;
+    /*transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;*/
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.webxrUI .xrMenu #btn_xrClose {
+    top: 14px;
+    left: 14px;
+}
+
+.webxrUI .xrMenu #btn_xrReset {
+    bottom: 14px;
+    left: 14px;
+}
+
+.webxrUI .xrMenu .menuRight {
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: max-content;
+    
+}
+
+.webxrUI .xrMenu .menuRight button {
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    width: 26px;
+    height: 26px;
+    padding: 0px;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: visible;
+}
+
+.webxrUI .xrMenu .menuRight .buttonWrapper {
+    height: 80%;
+    max-height: 260px;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: rgba(255,255,255,.75);
+    border-left-style: solid;
+    width:54px;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 0px;
+    position: absolute;
+}
+
+.webxrUI .xrMenu #btn_frame {
+    top: calc(15% - 13px);
+}
+
+.webxrUI .xrMenu #btn_saddle {
+    top: 50%;
+    
+}
+
+.webxrUI .xrMenu #btn_wheels {
+    top: calc(85% + 13px);
+
+}
+
+
+
+#stabilization {
+    position: absolute;
+    display: block;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    max-width: 500px;
+    pointer-events: none;
+}
+
+#interactionPrompt {
+    position: absolute;
+    display: none;
+    transform: translateX(-50%);
+    bottom: 15%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+/*================================================================*/
+
+#imageTracking .imageTrackingWrapper {
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: max-content;
+    max-width: 150px;
+    text-align: center;
+}
+
+#imageTracking button {
+    display: block;
+    position: relative;
+    background-color: #ffcc00;
+    transform: translateX(-50%);
+    /*top: 50%;*/
+    left: 50%;
+    /*width: calc(100% - 40px);*/
+    padding: 8px;
+    margin-top: 8px;
+    height: max-content;
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: white;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#imageTracking button:active {
+    background-color: #cca300;
+}
+
+.mindarUI {
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /*background-color: rgba(235, 235, 235,1);*/
+    /*background-color: rgb(55,55,55);*/
+}
+
+.imageSpinnerWrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    height: 150px;
+    width: 150px;
+}
+
+.imageSpinnerWrapper > div {
+    height: calc(100% - 36px);
+    width: calc(100% - 36px);
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  border-style: solid;
+  border-width: 18px;
+  border-color: transparent #ffcc00 #ffcc00 #ffcc00;
+  border-radius: 50%;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .mindarUI .mindMenu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+}
+
+.mindarUI .mindMenu .menuLeft {
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: max-content;
+    
+}
+
+.mindarUI .mindMenu .menuLeft button {
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+    padding: 0px;
+    /*transform: translateX(-50%);*/
+    border-style: none;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: visible;
+}
+
+.mindarUI .mindMenu button img {
+    position: relative;
+    /*transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;*/
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.mindarUI .mindMenu #btn_mindClose {
+    top: 14px;
+    left: 14px;
+}
+
+.mindarUI .canvasContainer {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="122.29mm" height="90.016mm" version="1.1" viewBox="0 0 122.29 90.016" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+<dc:title/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g fill="#999" shape-rendering="auto">
+<path transform="scale(.26458)" d="m24.014 1.2773c-13.615 0-25.025 11.409-25.025 25.023v83.256h28.996v-79.283h82.021v-28.996zm328.18 0v28.996h82.016v79.283h29.002v-83.256c0-13.615-11.417-25.023-25.031-25.023zm-353.21 229.37v83.25c0 13.615 11.411 25.031 25.025 25.031h85.992v-29.004h-82.021v-79.277zm435.22 0v79.277h-82.016v29.004h85.986c13.615 0 25.031-11.417 25.031-25.031v-83.25z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;paint-order:markers fill stroke;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+<path d="m28.016 17.916c-2.9379 0-5.4219 2.484-5.4219 5.4219v43.338c0 2.9379 2.484 5.4219 5.4219 5.4219h66.258c2.9379 0 5.4238-2.484 5.4238-5.4219v-43.338c0-2.9379-2.4859-5.4219-5.4238-5.4219zm2.25 7.6719h61.758v38.838h-61.758z" color="#000000" color-rendering="auto" dominant-baseline="auto" image-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;paint-order:markers fill stroke;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+</g>
+</svg>

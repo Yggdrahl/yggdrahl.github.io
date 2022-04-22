@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="307.35mm" height="307.35mm" version="1.1" viewBox="0 0 307.35 307.35" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+<dc:title/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g transform="translate(43.307 40.321)">
+<path d="m208.29 134.3 0.0116 12.015 13.25 7.534c4.1036 2.3332 4.1063 5.902 3e-3 8.2353l-103.94 59.1c-4.1036 2.3332-10.381 2.3317-14.485-2e-3l-103.94-59.098c-4.1036-2.3332-4.106-5.902-0.002383-8.2353l13.253-7.5348 0.01164-12.012-23.821 13.544c-9.7701 5.555-9.7701 14.687 0 20.242l103.94 59.097c9.7701 5.555 25.831 5.555 35.601 0l103.94-59.099c9.7701-5.555 9.7701-14.687 0-20.242z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#fff" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;paint-order:markers fill stroke;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+<path d="m110.4 7.0564-79.896 45.963-0.09463 92.133 79.016 45.34 80.893-45.334-0.0947-92.143z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="23.391"/>
+<path d="m187.24 47.806-77.776 44.635-75.916-44.6-6.0841 10.355 75.96 44.626v87.669h12.009v-87.628l77.781-44.64z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#fff" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;isolation:auto;mix-blend-mode:normal;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
+</g>
+</svg>
