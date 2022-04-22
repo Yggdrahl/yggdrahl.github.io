@@ -84,7 +84,7 @@ function findArrayPosition(responseURL) {
   return -1;
 }
 
-function calcLoadingProgress() {
+function calcLoadingProgress(lengthComputable) {
 
   let result = 0;
 
@@ -92,12 +92,21 @@ function calcLoadingProgress() {
     return -1;
   }
 
-  for(let i = 0; i < ladeArray.length; i++) {
-    result += ladeArray[i].progress;    
+  if(lengthComputable) {
+    for(let i = 0; i < ladeArray.length; i++) {
+      result += ladeArray[i].progress;    
+    }
+  
+    ladebalken.style.width = ((result / assetCount) * 100) + "%";
+    return ((result / assetCount) * 100);
+  } else {
+    result = loadedModels / assetCount;
+    ladebalken.style.width = (result) + "%";
+    console.log("Loading: " + result + "%");
+    return result;
   }
 
-  ladebalken.style.width = ((result / assetCount) * 100) + "%";
-  return ((result / assetCount) * 100);
+  
 
 }
 
@@ -245,9 +254,8 @@ async function activateXR() {
         tmpLadeObjekt.progress = (xhr.loaded / xhr.total);
         ladeArray.push(tmpLadeObjekt);
       }
-
-      let progress = calcLoadingProgress();
-      console.log("progress: " + progress + "loadedModells: " + loadedModels);
+      let progress = calcLoadingProgress(xhr.lengthComputable);
+      //console.log(progress);
       if(progress >= 100) {
         webxrUiAnimation.play();
         loadingScreenAnimation.play();
