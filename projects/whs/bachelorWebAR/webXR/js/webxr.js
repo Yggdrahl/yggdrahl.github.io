@@ -100,8 +100,8 @@ function calcLoadingProgress(lengthComputable) {
     ladebalken.style.width = ((result / assetCount) * 100) + "%";
     return ((result / assetCount) * 100);
   } else {
-    result = loadedModels / assetCount;
-    ladebalken.style.width = (result) + "%";
+    result = (loadedModels / assetCount) * 100;
+    ladebalken.style.width = result + "%";
     console.log("Loading: " + result + "%");
     return result;
   }
