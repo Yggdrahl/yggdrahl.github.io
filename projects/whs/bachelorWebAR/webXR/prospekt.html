@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="content-language" content="de-DE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="./css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="./assets/favicon.svg" />
+    <style>
+        body {
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            margin: 0px;
+            padding: 0px;
+            overflow: hidden;
+        }
+        .wrapper {
+            width: 90%;
+            height: 90%;
+            max-height: 250px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+        .urlBox {
+            border-radius: 6px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(50,50,50);
+            background-color: rgb(225,225,225);
+            color: rgb(50,50,50);
+            width: 100%;
+            padding: 4px;
+            height: max-content;
+            overflow: scroll;
+        }
+        .urlBox a {
+            text-decoration: none;
+            color: rgb(50,50,50);
+        }
+        img {
+            position: absolute;
+            padding: 12px;
+            transform: translateX(-50%);
+            left: 50%;
+            height: 80px;
+            width: 80px;
+        }
+    </style>
+   
+    
+    <title>WebAR</title>
+  </head>
+
+  <body>
+      <a href="./"><img src="./assets/favicon.svg"></a>
+      <div class="wrapper">
+        Bitte öffnen Sie den folgenden Link auf einem Dektop-Browser:
+        <br><br>
+        <div class="urlBox"></div>
+        <br><br>
+        Richten Sie dann die Kamera ihres Smartphones, bei Verwendung der AR App, auf das Bild.
+        <br><br>
+        Sie können das Bild direkt vom Bildschrim scannen oder dafür ausdrucken.
+      </div>
+      
+  </body>
+
+<script type="module">
+    let mobileDevice = false;
+    if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        mobileDevice = false;
+        window.location.href="./assets/imageTracking/ProspektFahrrad.pdf";
+    } else {
+        mobileDevice = true;
+        let baseURL = window.location.href;
+        let urlBox = document.querySelector('.urlBox');
+        //let getURL = window.location;
+        //let baseURL = getURL .protocol + "//" + getURL.host + "/" + getURL.pathname.split('/')[1];
+        //urlBox.innerHTML = baseURL;
+        
+        let link = document.createElement('a');
+        link.setAttribute('href',baseURL);
+        link.innerHTML = baseURL;
+        urlBox.appendChild(link);
+        
+    }
+</script>
