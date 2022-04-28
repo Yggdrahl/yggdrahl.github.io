@@ -51,6 +51,17 @@
             height: 80px;
             width: 80px;
         }
+
+        @media screen and (max-height: 450px) {
+
+            img {
+                display: none;
+            }
+            #header {
+                display: none;
+            }
+
+        }
     </style>
    
     
@@ -58,7 +69,7 @@
   </head>
 
   <body>
-      <a href="./"><img src="./assets/favicon.svg"></a>
+      <a href="./" id="header"><img src="./assets/favicon.svg"></a>
       <div class="wrapper">
         Bitte öffnen Sie den folgenden Link auf einem Dektop-Browser:
         <br><br>
