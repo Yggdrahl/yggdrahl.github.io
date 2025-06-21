@@ -1,0 +1,143 @@
+html, body {
+    background-color: rgb(48, 48, 48);
+    color: rgb(212, 212, 212);
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+.calcBody {
+    background-color: rgba(255,255,255,.25);
+    padding: 18px;
+    border-radius: 8px;
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: fit-content;
+    max-width: 90%;
+}
+
+.fpsBody {
+    border-bottom: 1px solid rgba(255,255,255,.5);
+    padding: 0px 0px 18px 0px;
+    width: 100%;
+}
+
+#customFPS {
+    display: none;
+    width: 50px;
+}
+
+.calcFields b {
+    display: block;
+    padding: 4px 0 16px 0;
+}
+
+.calcFields .frameCalculator {
+    
+    display: block;
+    width: 100%;
+    min-width: 300px;
+    margin: 0;
+    padding: 0 0 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,.5);
+}
+
+.calcFields .timeCalculator {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+
+.calcFields .timeCalculator .frameInputContainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.calcFields .timeCalculator .frameInputContainer input {
+    width: calc(100% - 8px);
+    margin-left: 8px;
+}
+
+.timerInput input {
+    width: 50px;
+    display: inline-block;
+    margin: 0px 4px 0px 0px;
+}
+
+.resultContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: 8px 0px 0px 0px;
+}
+
+.resultContainer > button {
+    display: inline-flex;
+    right: 0;
+}
+
+.resultContainer > div {
+    display: inline-flex;
+    width: 100%;
+    border-bottom: 2px dotted rgba(255,255,255,.5);
+    overflow-x: auto;
+    margin: 0 12px 0 0;
+}
+
+.frameCalculator table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.frameCalculator table tr {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border: none;
+}
+
+.frameCalculator table tr td {
+    margin: 0;
+    padding: 0;
+    width: min-content;
+    border: none;
+}
+
+@media only screen and (max-width: 336px) {
+
+    .calcBody {
+        background-color: rgba(255,255,255,.25);
+        padding: 2px;
+        border-radius: 0px;
+    
+        position: absolute;
+        transform: translate(0%, 0%);
+        top: 0;
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+    }
+
+    .timerInput input {
+        width: 20px;
+        display: inline-block;
+        margin: 0px 2px 0px 0px;
+    }
+
+    .calcFields .frameCalculator {
+    
+        display: block;
+        width: 100%;
+        min-width: 140px;
+        margin: 0;
+        padding: 0 0 8px 0;
+        border-bottom: 1px solid rgba(255,255,255,.5);
+    }
+
+}

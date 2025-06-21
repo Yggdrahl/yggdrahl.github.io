@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framecalculator</title>
+    <link rel="stylesheet" href="./framerechner.css"></link>
+</head>
+<body>
+    <div class="calcBody">
+      <div class="fpsBody">
+    <label for="fpsSelect">Frame rate:</label>
+    <select name="fpsSelect" id="fpsSelect">
+      <optgroup label="NTSC">
+        <option value="30" selected>30 Fps</option>
+        <option value="60">60 Fps</option>
+      </optgroup>
+      <optgroup label="PAL">
+        <option value="24">24 Fps</option>
+        <option value="25">25 Fps</option>
+        <option value="50">50 Fps</option>
+        
+      </optgroup>
+      <option value="custom">Custom</option>
+      </select>
+    <input id="customFPS" type="number" value="30" max="999" disabled>
+    </div>
+    
+    <div class="calcFields">
+        <div class="frameCalculator">
+          <b>Frame Calculation</b>
+          <table>
+            <tr>
+              <td>h</td>
+              <td>m</td>
+              <td>s</td>
+              <td>frame</td>
+            </tr>
+            <tr class="timerInput">
+              <td><input type="number" min="00" value="00" id="hour">:</td>
+              <td><input type="number" min="00" value="00" id="minute">:</td>
+              <td><input type="number" min="00" value="00" id="second">:</td>
+              <td><input type="number" min="00" value="00" id="frame"></td>
+            </tr>
+          </table>
+            <div class="resultContainer">
+              <div id="resultFrames">=</div>
+              <button id="calculateFrames">Calculate</button>
+            </div>
+            
+
+            
+        </div>
+        <div class="timeCalculator">
+          <b>Time Calculation</b>
+          <div class="frameInputContainer">
+          <label for="frameNumberField">Frames:</label>
+            <input name="frameNumberField" type="number" min="1" id="frameCalc" value="1">
+          </div>
+        </div>
+        
+
+        <div class="resultContainer">
+          <div id="resultTime">=</div>
+            <button id="calculateTime">Calculate</button>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script src="./framecalculator.js"></script>
