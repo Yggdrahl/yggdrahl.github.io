@@ -1,0 +1,245 @@
+:root {
+    --amber: #ffab00;
+    --background-screen: rgb(46, 13, 0);
+
+    --scanline-size: calc(100vh / 5);
+    --border-size: 3px;
+    --dialog-shadow-size: 16px;
+}
+
+@font-face {
+    font-family: "VT323";
+    src: url('./font/VT323/VT323-Regular.ttf') format('truetype');
+}
+
+html {
+    background-color: var(--background-screen);
+    background-image: linear-gradient(180deg, var(--background-screen) 0%, rgb(71, 43, 29) 100%);
+    background-repeat: repeat;
+    background-size: 100% 8px;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+html * {
+    font-size: 20pt;
+    color: var(--amber);
+    font-family: "VT323", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.scanlines {
+    z-index: 100;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    background-image: linear-gradient(0deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-size: 100% var(--scanline-size);
+    animation: bg-scroll 10s linear infinite;
+}
+
+@keyframes bg-scroll {
+    0% {
+        background-position: 0 calc(var(--scanline-size) * (-1));
+    }
+    100% {
+        background-position: 0 100vh;
+    }
+}
+
+button {
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    width: max-content;
+    min-width: max-content;
+
+}
+
+button:hover:not(:disabled),
+button:focus {
+    background-color: var(--amber);
+    color: var(--background-screen);
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+}
+
+button:disabled {
+    opacity: .5;
+}
+
+input[type=file] {
+    display: none !important;
+}
+
+label[for='fileInput'] {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+input[type=text], input[type=password] {
+    background-color: var(--background-screen);
+    border-color: var(--amber);
+    border-width: var(--border-size);
+    border-style: none none dotted none;
+    outline: none !important;
+    border-radius: 0;
+    text-decoration: none;
+    caret-color: var(--amber);
+}
+
+input[type=text]::placeholder, input[type=password]::placeholder {
+    opacity: .25;
+    color: var(--amber);
+}
+
+.window {
+    border: var(--border-size) solid var(--amber);
+    padding: 20px;
+
+    background-color: var(--background-screen);
+
+    box-sizing: border-box;
+
+    min-width: 100px;
+    min-height: 100px;
+    width: 90%;
+    height: max-content;
+    max-width: 800px;
+    max-height: 600px;
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+
+.window .header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+    height: max-content;
+    box-sizing: border-box;
+    border-color: var(--amber);
+    border-width: var(--border-size);
+    border-style: none none solid none;
+    padding: 0 0 10px 0;
+    margin: 0 0 10px 0;
+}
+
+.window .header span {
+    width: 100%;
+}
+.window .body > * {
+    display: block;
+    margin: 12px 0;
+}
+.window .body span > * {
+    display: inline-block;
+}
+
+.window .footer {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+    height: max-content;
+    box-sizing: border-box;
+    border-color: var(--amber);
+    border-width: var(--border-size);
+    border-style: solid none none none;
+    padding: 10px 0 0 0;
+    margin: 10px 0 0 0;
+}
+
+.window .footer span {
+    width: 100%;
+    text-align: right;
+}
+
+.dialog {
+    z-index: 50;
+    border: var(--border-size) solid var(--amber);
+    padding: 20px;
+
+    background-color: var(--background-screen);
+
+    box-sizing: border-box;
+
+    min-width: 100px;
+    min-height: 100px;
+    width: 90%;
+    height: max-content;
+    max-width: 800px;
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+
+    box-shadow: var(--dialog-shadow-size) var(--dialog-shadow-size) 0px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: var(--dialog-shadow-size) var(--dialog-shadow-size) 0px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: var(--dialog-shadow-size) var(--dialog-shadow-size) 0px 0px rgba(0,0,0,0.5);
+}
+
+.dialog section {
+    width: 100%;
+    height: max-content;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+.dialog section > span,
+.dialog section > ul {
+    display: block;
+    width: 100%;
+}
+
+.dialog section.header span {
+    background-color: var(--amber);
+    color: var(--background-screen);
+    text-align: center;
+}
+
+.dialog section.body span {
+    padding: 8px 0;
+}
+
+.dialog section.footer {
+    text-align: center;
+}
+
+.visuallyhidden {
+    display: none !important;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .window {
+        width: 95%;
+        transform: translate(-50%, 0%);
+        top: 64px;
+    }
+
+    .window .footer span {
+        display: none;
+    }
+}

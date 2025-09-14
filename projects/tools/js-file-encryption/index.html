@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Title</title>
+    <script src="./main.js"></script>
+    <link rel="stylesheet" type="text/css" href="./retro_amber.css">
+
+</head>
+<body>
+    <div class="scanlines"></div>
+
+    <div class="window" id="encryption">
+        <div class="header">
+            <span>JS File Encryption (JavaScript needs to be enabled)</span>
+            <button id="openAbout" aria-label="Open the dialog with information about this webapp.">[ About ]</button>
+        </div>
+        <div class="body">
+            <span>
+                <span id="fileName"></span>
+                <button id="fileInputButton" aria-label="Open the dialog window for selecting a file">[ Select File ]</button>
+                <input type="file" id="fileInput" aria-label="Input field for the file to be encrypted">
+            </span>
+            <span>
+                <input type="password" id="keyValueInput" placeholder="Encryption key" name="keyInput" aria-label="Input field for the encryption key" required>
+                <button id="keyVisibilityToggler" disabled>[ Show ]</button>
+            </span>
+
+        </div>
+        <div class="footer">
+            <button id="encryptButton" aria-label="Button for starting the encryption" disabled>[ Encrypt ]</button>
+            <button id="decryptButton" aria-label="Button for starting the decryption" disabled>[ Decrypt ]</button>
+            <span><- Start procedure and download file</span>
+        </div>
+    </div>
+
+    <div class="dialog visuallyhidden" id="aboutDialog">
+        <section class="header">
+            <span>About this Webapp</span>
+        </section>
+        <section class="body">
+            <span>
+                Copyright 2025 - Dennis Krämer (<a href="https://github.com/yggdrahl">Yggdrahl</a>)
+            </span>
+            <span>
+                This small web app was programmed to test whether a ROT13-like encryption algorithm can be implemented using JavaScript. This app should not be used seriously for encrypting critical files. The app is just a gimmick, albeit functional to a certain extent.
+            </span>
+            <span>
+                All files are processed locally by the client's web browser and are NOT loaded onto a remote server.
+            </span>
+            <span>
+                The encryption works with 8-bit data, i.e. most text files, images, etc.
+            </span>
+            <span>
+                This website uses the following fonts, which are licensed under the <a href="https://openfontlicense.org">OpenFont</a> license:
+            </span>
+            <ul>
+                <li>
+                    <span><a href="https://fonts.google.com/specimen/VT323">VT323</a> by <a href="mailto:peter.hull@oikoi.com">Peter Hull</a></span><br/>
+                    <a href="https://openfontlicense.org">https://openfontlicense.org</a>
+                </li>
+            </ul>
+        </section>
+        <section class="footer">
+            <span>
+                <button id="closeAbout" aria-label="Close this dialog">[ Close ]</button>
+            </span>
+        </section>
+
+
+    </div>
+
+
+
+</body>
+</html>
