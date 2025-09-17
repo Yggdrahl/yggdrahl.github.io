@@ -177,6 +177,11 @@ input[type=text]::placeholder, input[type=password]::placeholder {
 
 .dialog {
     z-index: 50;
+
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+
     border: var(--border-size) solid var(--amber);
     padding: 20px;
 
@@ -189,6 +194,7 @@ input[type=text]::placeholder, input[type=password]::placeholder {
     width: 90%;
     height: max-content;
     max-width: 800px;
+    max-height: 90%;
 
     position: absolute;
     transform: translate(-50%, -50%);
@@ -217,6 +223,10 @@ input[type=text]::placeholder, input[type=password]::placeholder {
     background-color: var(--amber);
     color: var(--background-screen);
     text-align: center;
+}
+
+.dialog section.body {
+    overflow: hidden auto;
 }
 
 .dialog section.body span {
